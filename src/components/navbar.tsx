@@ -49,6 +49,8 @@ import Telkomsel from "../../public/svg/telkomsel.svg";
 import { Fragment, useEffect, useState } from "react";
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import { usePathname } from "next/navigation";
+import { useDetectPathname } from "@/hooks/use-detect-pathname";
 
 export const JourneyItems: {
   title: string;
@@ -89,6 +91,7 @@ export function Navbar() {
   const isMobile = useIsMobile();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const isAdminPage = useDetectPathname({ pathname: "administrator" });
 
   useEffect(() => {
     setMounted(true);
@@ -101,6 +104,9 @@ export function Navbar() {
       setTheme("dark");
     }
   };
+
+  if (isAdminPage) return;
+
   if (mounted) {
     return (
       <Fragment>

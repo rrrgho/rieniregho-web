@@ -1,7 +1,5 @@
-import PageHeader from "@/components/page-header";
-import ProjectsLayoutWrapper from "@/components/layout-wrapper";
-import type { ReactNode } from "react";
 import LayoutWrapper from "@/components/layout-wrapper";
+import type { ReactNode } from "react";
 
 export const metadata = {
   title: "My Projects",
