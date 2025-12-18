@@ -18,7 +18,6 @@ import Link from "next/link";
 
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
@@ -39,55 +38,16 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import { Avatar } from "@/components/ui/avatar";
+import { useWorkingExperiences } from "@/hooks/queries/working-experience.query";
 import { useDetectPathname } from "@/hooks/use-detect-pathname";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
-import Detikcom from "../../public/svg/detikcom.jpeg";
-import Gic from "../../public/svg/gic.png";
-import Lunata from "../../public/svg/lunata.png";
-import Telkomsel from "../../public/svg/telkomsel.svg";
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
-import { useWorkingExperiences } from "@/hooks/queries/working-experience.query";
-import { Skeleton } from "./ui/skeleton";
-import { WorkingExperience } from "@/types/working-experience.types";
 import WorkingExperienceNavList from "./working-experience-nav-list";
-
-// export const JourneyItems: {
-//   title: string;
-//   href: string;
-//   description: string;
-//   icon: string;
-// }[] = [
-//   {
-//     title: "Telkomsel | 2023 - Now",
-//     icon: Telkomsel,
-//     href: "/docs/primitives/alert-dialog",
-//     description:
-//       "Like to see how exiciting my work in Telkomsel? Come I'll show you.",
-//   },
-//   {
-//     title: "Detikcom, Transmedia | 2022",
-//     icon: Detikcom,
-//     href: "/docs/primitives/alert-dialog",
-//     description:
-//       "Working here has brought me some interesting story, see why !",
-//   },
-//   {
-//     title: "GIC Trade | 2021",
-//     icon: Gic,
-//     href: "/docs/primitives/alert-dialog",
-//     description:
-//       "Working here has brought me some interesting story, see why !",
-//   },
-//   {
-//     title: "Lunata Technologies | 2019",
-//     icon: Lunata,
-//     href: "/docs/primitives/scroll-area",
-//     description: "Given a chance as newcomer in Tech industries was a blessing",
-//   },
-// ];
+import moment from "moment";
+import WorkingExperienceNavMobileList from "./working-experience-nav-mobile-list";
 
 export function Navbar() {
   const isMobile = useIsMobile();
@@ -96,8 +56,6 @@ export function Navbar() {
   const isAdminPage = useDetectPathname({ pathname: "administrator" });
 
   const workingExperiences = useWorkingExperiences();
-  const { data, isLoading, error } = workingExperiences;
-  const workingExperienceData = data?.data || [];
 
   useEffect(() => {
     setMounted(true);
@@ -154,63 +112,14 @@ export function Navbar() {
                   <Link href="/">Home</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Journey</NavigationMenuTrigger>
-                <WorkingExperienceNavList />
-                {/* <NavigationMenuContent className="ml-[-360]">
-                  <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {JourneyItems.map((item) => (
-                      <ListItem
-                        key={item.title}
-                        icon={item.icon}
-                        title={item.title}
-                        href={item.href}
-                      >
-                        {item.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent> */}
-                {/* {isLoading && (
-                  <NavigationMenuContent>
-                    <ul className="grid gap-2 grid-cols-2 w-[400px] h-[100px]">
-                      <li>
-                        <Skeleton className="h-full" />
-                      </li>
-                      <li>
-                        <Skeleton className="h-full" />
-                      </li>
-                      <li>
-                        <Skeleton className="h-full" />
-                      </li>
-                      <li>
-                        <Skeleton className="h-full" />
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                )}
-                {workingExperienceData ? (
-                  <NavigationMenuContent>
-                    {workingExperienceData.map((item: WorkingExperience) => {
-                      return (
-                        <li>
-                          <Skeleton className="h-full" />
-                        </li>
-                      );
-                    })}
-                  </NavigationMenuContent>
-                ) : (
-                  <span>sas</span>
-                )} */}
-              </NavigationMenuItem>
-              <NavigationMenuItem>
+              {/* <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
                   className={navigationMenuTriggerStyle()}
                 >
-                  <Link href="/docs">Blogs</Link>
+                  <Link href="/docs">Resume</Link>
                 </NavigationMenuLink>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
@@ -218,6 +127,14 @@ export function Navbar() {
                 >
                   <Link href="/projects">Projects</Link>
                 </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <div className="animate-bounce">
+                  <NavigationMenuTrigger className="bg-primary/50 font-bold text-white hover:bg-primary/20">
+                    ✨ Career Journey
+                  </NavigationMenuTrigger>
+                </div>
+                <WorkingExperienceNavList />
               </NavigationMenuItem>
               <NavigationMenuItem className="mr-1">
                 <div
@@ -261,40 +178,21 @@ export function Navbar() {
                   </div>
                   <div className="ms-3">Home</div>
                 </div>
-                <div className="m-2 p-2">
+                <div className="m-2 p-2 rounded">
                   <Collapsible defaultOpen className="group/collapsible">
                     <CollapsibleTrigger asChild>
-                      <div className="flex flex-row relative ">
+                      <div className="flex flex-row relative animate-bounce ">
                         <div>
                           <Route />
                         </div>
-                        <div className="ms-3">Wanna see my journey?</div>
+                        <div className="ms-3">Carrer Journey</div>
                         <div className="absolute top-0 right-0">
                           <ChevronDown />
                         </div>
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      {/* {JourneyItems.map((item) => (
-                        <div className="px-2 mt-2" key={item.title}>
-                          <div className="border border-1 rounded-lg p-2">
-                            <div className="text-sm leading-none font-medium flex flex-nowrap items-center">
-                              <div>
-                                <Image
-                                  src={item.icon}
-                                  alt="Description of SVG"
-                                  width={15}
-                                  height={15}
-                                />
-                              </div>
-                              <div className="ms-2">{item.title}</div>
-                            </div>
-                            <p className="mt-2 text-muted-foreground line-clamp-2 text-sm leading-snug">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
-                      ))} */}
+                      <WorkingExperienceNavMobileList />
                     </CollapsibleContent>
                   </Collapsible>
                 </div>
@@ -326,25 +224,35 @@ export function ListItem({
   icon,
   children,
   href,
+  start_date,
+  end_date,
   ...props
 }: React.ComponentPropsWithoutRef<"li"> & {
   href: string;
   icon: string | any;
+  start_date?: any;
+  end_date?: any;
 }) {
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
         <Link href={href}>
           <div className="text-sm leading-none font-medium flex flex-nowrap items-center">
-            <div>
+            <div className="h-[30px] w-[35px] relative">
               <Image
                 src={process.env.NEXT_PUBLIC_STORAGE_URL + icon}
                 alt="Description of SVG"
-                width={15}
-                height={15}
+                fill
+                className="rounded"
               />
             </div>
-            <div className="ms-2">{title}</div>
+            <div className="ms-2">
+              {title} <br />
+              <span className="text-xs text-primary">
+                {moment(start_date).format("MMMM YYYY")} -{" "}
+                {end_date ? moment(end_date).format("MMMM YYYY") : "Present"}
+              </span>
+            </div>
           </div>
           <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
             {children}

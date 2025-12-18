@@ -6,7 +6,7 @@ type Action = {
   resetProject: () => void;
 };
 
-const initialState: Project = {
+const initialState: Partial<Project> = {
   name: "",
   description: "",
   project_link: "",
@@ -17,7 +17,7 @@ const initialState: Project = {
   project_date: "",
 };
 
-export const useProjectStore = create<Project & Action>((set) => ({
+export const useProjectStore = create<Partial<Project> & Action>((set) => ({
   ...initialState,
   updateProject: (data) =>
     set((state) => ({

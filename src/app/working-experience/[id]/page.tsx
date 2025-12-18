@@ -7,7 +7,7 @@ import { useWorkingExperienceDetail } from "@/hooks/queries/working-experience.q
 import { renderHtmlContent } from "@/lib/html-parser";
 import { Project } from "@/types/project.types";
 import { WorkingExperience } from "@/types/working-experience.types";
-import { ExternalLink, Github } from "lucide-react";
+import { AlertCircle, ExternalLink, FileWarning, Github } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -87,19 +87,16 @@ export default function ProjectDetailPage() {
           <div className="lg:col-span-1">
             {/* Technologies */}
             <div className="bg-card border border-border rounded-lg p-6  top-24">
-              <h3 className="font-semibold text-primary">Technologies</h3>
-              <span className="text-sm">
-                The tech stack that I use in building this project
-              </span>
-              <div className="flex flex-wrap gap-2 mt-4">
-                {/* {detail.tech_stack.split(",").map((tech: string) => (
-                  <span
-                    key={tech}
-                    className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium"
-                  >
-                    {tech}
-                  </span>
-                ))} */}
+              <h3 className="font-semibold text-primary">Gallery</h3>
+              <span className="text-sm">See how amazing working here</span>
+              <div className="flex flex-wrap grid grid-cols-1 gap-2 mt-4 py-10">
+                <div className="w-full flex justify-center items-center">
+                  <AlertCircle />
+                </div>
+                <span className="text-xs text-primary text-center">
+                  Gallery for working experience is still under development, see
+                  PROJECTS to see the gallery !
+                </span>
               </div>
             </div>
           </div>

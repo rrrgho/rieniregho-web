@@ -32,6 +32,8 @@ const WorkingExperienceNavList = () => {
               href={`/working-experience/${item.id}`}
               title={item.title}
               icon={item.icon}
+              start_date={item.start_date}
+              end_date={item.end_date}
             >
               <div className="w-full h-full pt-2">{item.subtitle}</div>
             </ListItem>
