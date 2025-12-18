@@ -24,11 +24,11 @@ const nextConfig: NextConfig = {
         pathname: "/storage/**",
       },
       // Add your production patterns here
-      // {
-      //   protocol: "https",
-      //   hostname: "cdn.example.com",
-      //   pathname: "/storage/**",
-      // },
+      {
+        protocol: "https",
+        hostname: "iregho-api.doiscode.com",
+        pathname: "/storage/**",
+      },
     ],
   },
 };
