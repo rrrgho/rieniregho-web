@@ -23,8 +23,9 @@ const ProtectAdminRoutes = ({ children }: { children: React.ReactNode }) => {
         setIsLoading(false);
       }
     } else if (session.status === "unauthenticated") {
+      console.log("SESSION:", session);
       // Not logged in, redirect to login
-      router.push("/login");
+      router.push("/coba/login");
     }
   }, [session.status, router]);
 
