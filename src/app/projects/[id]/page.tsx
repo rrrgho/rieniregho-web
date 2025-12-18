@@ -63,33 +63,32 @@ export default function ProjectDetailPage() {
         title={projectData.name}
         description="See what amazing from this project story"
       />
-      <div className="w-full min-h-screen px-5 lg:px-40 py-20">
+      <div className="w-full min-h-screen px-5 lg:px-40">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2">
             {/* Project Image */}
-            <div className="rounded-lg overflow-hidden mb-8">
-              <div className="relative w-full h-96">
+            <div className="rounded-lg overflow-hidden bg-primary">
+              <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[600px]">
                 <Image
                   src={
                     process.env.NEXT_PUBLIC_STORAGE_URL + projectData.image_path
                   }
                   alt={projectData.title ?? "Project Thumbnail"}
-                  width={1920}
-                  height={1080}
-                  style={{ maxWidth: "100%", maxHeight: "100%" }}
-                  className="rounded-lg object-contain w-auto h-auto"
+                  fill
+                  className="object-cover"
+                  priority
                 />
               </div>
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-primary py-10">
               {projectData.name}
             </h1>
 
             {/* Long Description */}
-            <div className="mb-12">
+            <div className="mb-12 ">
               {renderHtmlContent(projectData.description)}
             </div>
 

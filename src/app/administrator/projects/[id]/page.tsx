@@ -1,6 +1,6 @@
 "use client";
 import { ErrorState } from "@/components/error-state";
-import ProjectForm, { formSchema } from "@/components/project-form";
+import ProjectForm, { projectFormSchema } from "@/components/project-form";
 import ProjectGalleryForm from "@/components/project-gallery-form";
 import {
   Card,
@@ -31,7 +31,7 @@ const AdminProjectsPage = () => {
   const projectUpdateMutation = useUpdateMutationProject(id);
   const { mutate, isPending } = projectUpdateMutation;
 
-  const onSubmitUpdate = (data: z.infer<typeof formSchema>) => {
+  const onSubmitUpdate = (data: z.infer<typeof projectFormSchema>) => {
     try {
       mutate(data, {
         onSuccess: () => {
@@ -65,10 +65,14 @@ const AdminProjectsPage = () => {
     <div className="w-full">
       <Card>
         <CardHeader>
-          <CardTitle>Project Detail</CardTitle>
-          <CardDescription>
-            Showing what you have made for this project!
-          </CardDescription>
+          <div className="flex justify-between items-start">
+            <div>
+              <CardTitle>Project Detail</CardTitle>
+              <CardDescription>
+                Showing what you have made for this project!
+              </CardDescription>
+            </div>
+          </div>
           <CardContent>
             <ProjectForm
               isDetail

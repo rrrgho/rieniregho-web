@@ -46,6 +46,14 @@ export const projectColumns: ColumnDef<Project>[] = [
 ];
 
 /**
+ * Get Project Columns with Actions
+ * Returns base columns without actions - actions are added at page level
+ */
+export function getProjectColumns(): ColumnDef<Project>[] {
+  return projectColumns;
+}
+
+/**
  * Fetch Projects
  * This function fetches the list of projects from the API.
  */
@@ -217,6 +225,27 @@ export function useUpdateMutationProject(id: string) {
       queryClient.invalidateQueries({ queryKey: ["/projects"], exact: false });
       // Invalidate the specific project detail query
       queryClient.invalidateQueries({ queryKey: ["/projects", id] });
+    },
+  });
+}
+
+/**
+ * Delete Project
+ * This function deletes a project by its ID
+ */
+
+async function deleteProject(id: string): Promise<IAPIResponse<Project>> {
+  const response = await apiClient.delete(`${endpoint}/${id}`);
+  return response.data;
+}
+
+export function useDeleteProject() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteProject(id),
+    onSuccess: () => {
+      // Invalidate all projects queries
+      queryClient.invalidateQueries({ queryKey: ["/projects"], exact: false });
     },
   });
 }

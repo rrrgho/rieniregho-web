@@ -2,6 +2,7 @@ import moment from "moment";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import ImageOriginal from "./image-original";
 
 interface IPostThumbnail {
   title: string;
@@ -21,17 +22,13 @@ const PostThumbnail: FC<IPostThumbnail> = ({
   return (
     <Link href={link}>
       <div className="rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
-        <div className="relative w-full h-[300px] lg:h-[400px] bg-muted flex justify-center">
+        <div className="relative w-full h-[300px] sm:h-[350px] lg:h-[400px] bg-muted flex justify-center">
           <Image
             src={process.env.NEXT_PUBLIC_STORAGE_URL + image}
-            alt="Post Image"
-            // fill
-            // className="object-cover"
-            className="rounded-lg object-contain w-auto h-auto"
-            priority={false}
-            width={1920}
-            height={1080}
-            style={{ maxWidth: "100%", maxHeight: "100%" }}
+            alt="post image"
+            fill
+            className="object-cover"
+            priority
           />
           <div className="bg-slate/20 absolute top-0 w-full h-full flex flex-column items-end">
             <div className="p-5 w-full bg-background/30">

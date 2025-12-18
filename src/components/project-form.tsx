@@ -1,8 +1,9 @@
+"use client";
+
 import { DatePicker } from "@/components/date-picker";
 import InputImage from "@/components/input-image";
 import QuillEditor from "@/components/quill-editor";
 import { Button } from "@/components/ui/button";
-import { CardFooter } from "@/components/ui/card";
 import {
   Field,
   FieldError,
@@ -17,7 +18,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
-export const formSchema = z.object({
+export const projectFormSchema = z.object({
   name: z.string({ message: "Cannot be empty" }),
   description: z.string({ message: "Cannot be empty" }),
   project_date: z.date({ message: "Cannot be emtpy" }),
@@ -46,7 +47,7 @@ export const formSchema = z.object({
 
 interface ProjectFormProps {
   initialData?: any;
-  onSubmit: (data: z.infer<typeof formSchema>) => void;
+  onSubmit: (data: z.infer<typeof projectFormSchema>) => void;
   isPending?: boolean;
   isDetail?: boolean;
   data?: Project;
@@ -60,8 +61,8 @@ const ProjectForm = ({
 }: ProjectFormProps) => {
   const [onEdit, setOnEdit] = useState<boolean>(false);
   const [showButtonSubmit, setShowButtonSubmit] = useState(true);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof projectFormSchema>>({
+    resolver: zodResolver(projectFormSchema),
     defaultValues: {
       name: "",
     },
@@ -92,7 +93,7 @@ const ProjectForm = ({
     }
   }, [data, populateForm]);
 
-  const submit = (data: z.infer<typeof formSchema>) => {
+  const submit = (data: z.infer<typeof projectFormSchema>) => {
     onSubmit(data);
   };
 
@@ -139,7 +140,7 @@ const ProjectForm = ({
                           {...field}
                           id="project_name_input"
                           aria-invalid={fieldState.invalid}
-                          placeholder="Login button not working on mobile"
+                          placeholder="Project name"
                           autoComplete="off"
                           disabled={isDetail && !onEdit}
                         />
@@ -333,37 +334,37 @@ const ProjectForm = ({
                 </div>
               </div>
             </div>
+            <div>
+              {showButtonSubmit && (
+                <Field orientation="horizontal" className="flex justify-end">
+                  <Button
+                    className="cursor-pointer"
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      if (onEdit) {
+                        setOnEdit(false);
+                      } else {
+                        form.reset();
+                      }
+                    }}
+                  >
+                    {onEdit ? "Cancel" : "Reset"}
+                  </Button>
+                  <Button
+                    className="cursor-pointer"
+                    type="submit"
+                    form="project-form"
+                    disabled={isPending}
+                  >
+                    {isPending ? "Submitting..." : "Submit"}
+                  </Button>
+                </Field>
+              )}
+            </div>
           </form>
         </FieldGroup>
       </div>
-      <CardFooter className="mt-10">
-        {showButtonSubmit && (
-          <Field orientation="horizontal" className="flex justify-end">
-            <Button
-              className="cursor-pointer"
-              type="button"
-              variant="outline"
-              onClick={() => {
-                if (onEdit) {
-                  setOnEdit(false);
-                } else {
-                  form.reset();
-                }
-              }}
-            >
-              {onEdit ? "Cancel" : "Reset"}
-            </Button>
-            <Button
-              className="cursor-pointer"
-              type="submit"
-              form="project-form"
-              disabled={isPending}
-            >
-              {isPending ? "Submitting..." : "Submit"}
-            </Button>
-          </Field>
-        )}
-      </CardFooter>
     </div>
   );
 };

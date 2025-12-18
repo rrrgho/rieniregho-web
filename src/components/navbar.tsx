@@ -49,47 +49,55 @@ import Gic from "../../public/svg/gic.png";
 import Lunata from "../../public/svg/lunata.png";
 import Telkomsel from "../../public/svg/telkomsel.svg";
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
+import { useWorkingExperiences } from "@/hooks/queries/working-experience.query";
+import { Skeleton } from "./ui/skeleton";
+import { WorkingExperience } from "@/types/working-experience.types";
+import WorkingExperienceNavList from "./working-experience-nav-list";
 
-export const JourneyItems: {
-  title: string;
-  href: string;
-  description: string;
-  icon: string;
-}[] = [
-  {
-    title: "Telkomsel | 2023 - Now",
-    icon: Telkomsel,
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "Like to see how exiciting my work in Telkomsel? Come I'll show you.",
-  },
-  {
-    title: "Detikcom, Transmedia | 2022",
-    icon: Detikcom,
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "Working here has brought me some interesting story, see why !",
-  },
-  {
-    title: "GIC Trade | 2021",
-    icon: Gic,
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "Working here has brought me some interesting story, see why !",
-  },
-  {
-    title: "Lunata Technologies | 2019",
-    icon: Lunata,
-    href: "/docs/primitives/scroll-area",
-    description: "Given a chance as newcomer in Tech industries was a blessing",
-  },
-];
+// export const JourneyItems: {
+//   title: string;
+//   href: string;
+//   description: string;
+//   icon: string;
+// }[] = [
+//   {
+//     title: "Telkomsel | 2023 - Now",
+//     icon: Telkomsel,
+//     href: "/docs/primitives/alert-dialog",
+//     description:
+//       "Like to see how exiciting my work in Telkomsel? Come I'll show you.",
+//   },
+//   {
+//     title: "Detikcom, Transmedia | 2022",
+//     icon: Detikcom,
+//     href: "/docs/primitives/alert-dialog",
+//     description:
+//       "Working here has brought me some interesting story, see why !",
+//   },
+//   {
+//     title: "GIC Trade | 2021",
+//     icon: Gic,
+//     href: "/docs/primitives/alert-dialog",
+//     description:
+//       "Working here has brought me some interesting story, see why !",
+//   },
+//   {
+//     title: "Lunata Technologies | 2019",
+//     icon: Lunata,
+//     href: "/docs/primitives/scroll-area",
+//     description: "Given a chance as newcomer in Tech industries was a blessing",
+//   },
+// ];
 
 export function Navbar() {
   const isMobile = useIsMobile();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const isAdminPage = useDetectPathname({ pathname: "administrator" });
+
+  const workingExperiences = useWorkingExperiences();
+  const { data, isLoading, error } = workingExperiences;
+  const workingExperienceData = data?.data || [];
 
   useEffect(() => {
     setMounted(true);
@@ -148,7 +156,8 @@ export function Navbar() {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Journey</NavigationMenuTrigger>
-                <NavigationMenuContent className="ml-[-360]">
+                <WorkingExperienceNavList />
+                {/* <NavigationMenuContent className="ml-[-360]">
                   <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     {JourneyItems.map((item) => (
                       <ListItem
@@ -161,7 +170,38 @@ export function Navbar() {
                       </ListItem>
                     ))}
                   </ul>
-                </NavigationMenuContent>
+                </NavigationMenuContent> */}
+                {/* {isLoading && (
+                  <NavigationMenuContent>
+                    <ul className="grid gap-2 grid-cols-2 w-[400px] h-[100px]">
+                      <li>
+                        <Skeleton className="h-full" />
+                      </li>
+                      <li>
+                        <Skeleton className="h-full" />
+                      </li>
+                      <li>
+                        <Skeleton className="h-full" />
+                      </li>
+                      <li>
+                        <Skeleton className="h-full" />
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                )}
+                {workingExperienceData ? (
+                  <NavigationMenuContent>
+                    {workingExperienceData.map((item: WorkingExperience) => {
+                      return (
+                        <li>
+                          <Skeleton className="h-full" />
+                        </li>
+                      );
+                    })}
+                  </NavigationMenuContent>
+                ) : (
+                  <span>sas</span>
+                )} */}
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
@@ -235,7 +275,7 @@ export function Navbar() {
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      {JourneyItems.map((item) => (
+                      {/* {JourneyItems.map((item) => (
                         <div className="px-2 mt-2" key={item.title}>
                           <div className="border border-1 rounded-lg p-2">
                             <div className="text-sm leading-none font-medium flex flex-nowrap items-center">
@@ -254,7 +294,7 @@ export function Navbar() {
                             </p>
                           </div>
                         </div>
-                      ))}
+                      ))} */}
                     </CollapsibleContent>
                   </Collapsible>
                 </div>
@@ -287,7 +327,10 @@ export function ListItem({
   children,
   href,
   ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string; icon: string }) {
+}: React.ComponentPropsWithoutRef<"li"> & {
+  href: string;
+  icon: string | any;
+}) {
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
@@ -295,7 +338,7 @@ export function ListItem({
           <div className="text-sm leading-none font-medium flex flex-nowrap items-center">
             <div>
               <Image
-                src={icon}
+                src={process.env.NEXT_PUBLIC_STORAGE_URL + icon}
                 alt="Description of SVG"
                 width={15}
                 height={15}

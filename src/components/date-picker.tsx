@@ -17,7 +17,7 @@ export function DatePicker({
   onChange,
   ...calendarProps
 }: {
-  value?: Date;
+  value?: Date | any;
   onChange: (date: Date | undefined) => void;
 } & Omit<DayPickerProps, "mode" | "selected" | "onSelect">) {
   const [open, setOpen] = React.useState(false);

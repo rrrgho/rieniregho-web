@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,31 +10,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  getProjectColumns,
-  useDeleteProject,
-} from "@/hooks/queries/project.query";
+  getWorkingExperienceColumns,
+  useDeleteWorkingExperience,
+} from "@/hooks/queries/working-experience.query";
 import DeleteActionCell from "@/components/delete-action-cell";
 import AppDatatable from "@/lib/Datatable/datatable";
-import { Project } from "@/types/project.types";
+import { WorkingExperience } from "@/types/working-experience.types";
 import { Plus, Eye } from "lucide-react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 
-export default function AdminProjects() {
+export default function WorkingExperiencePage() {
   const router = useRouter();
-  const deleteProjectMutation = useDeleteProject();
-  const { mutate: deleteProject } = deleteProjectMutation;
+  const deleteWorkingExperienceMutation = useDeleteWorkingExperience();
+  const { mutate: deleteWorkingExperience } = deleteWorkingExperienceMutation;
 
-  const handleViewProject = (project: Project) => {
-    router.push(`/administrator/projects/${project.id}`);
+  const handleViewExperience = (workingExperience: WorkingExperience) => {
+    router.push(`/administrator/working-experience/${workingExperience.id}`);
   };
 
   const handleDelete = useCallback(
     async (id: string) => {
       return new Promise<void>((resolve, reject) => {
-        deleteProject(id, {
+        deleteWorkingExperience(id, {
           onSuccess: () => {
             resolve();
           },
@@ -43,11 +44,11 @@ export default function AdminProjects() {
         });
       });
     },
-    [deleteProject]
+    [deleteWorkingExperience]
   );
 
-  const columns: ColumnDef<Project>[] = useMemo(() => {
-    const baseColumns = getProjectColumns();
+  const columns: ColumnDef<WorkingExperience>[] = useMemo(() => {
+    const baseColumns = getWorkingExperienceColumns();
     return [
       ...baseColumns,
       {
@@ -60,7 +61,7 @@ export default function AdminProjects() {
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                handleViewProject(row.original);
+                handleViewExperience(row.original);
               }}
               className="text-blue-500 cursor-pointer hover:text-blue-700 hover:bg-blue-50"
             >
@@ -69,8 +70,8 @@ export default function AdminProjects() {
             <DeleteActionCell
               id={row.original.id || ""}
               onDelete={handleDelete}
-              title="Delete Project"
-              description="Are you sure you want to delete this project? This action cannot be undone."
+              title="Delete Working Experience"
+              description="Are you sure you want to delete this working experience? This action cannot be undone."
             />
           </div>
         ),
@@ -83,22 +84,24 @@ export default function AdminProjects() {
       <div className="container mx-auto py-10">
         <Card>
           <CardHeader>
-            <CardTitle>Projects</CardTitle>
+            <CardTitle>Working Experience</CardTitle>
             <CardDescription>
-              Showcasing projects to the Website
+              List your work experience to the Website !
             </CardDescription>
             <CardAction>
-              <Link href="/administrator/projects/add">
+              <Link href="/administrator/working-experience/add">
                 <Button variant="outline" className="cursor-pointer">
                   <Plus />
-                  Add Projects
+                  Add Working Experience
                 </Button>
               </Link>
             </CardAction>
           </CardHeader>
+
           <CardContent>
-            <AppDatatable endpoint="/projects" columns={columns} />
+            <AppDatatable endpoint="/working-experiences" columns={columns} />
           </CardContent>
+          <CardContent></CardContent>
         </Card>
       </div>
     </div>
