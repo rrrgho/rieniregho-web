@@ -9,10 +9,7 @@ import {
   Instagram,
   Linkedin,
   Menu,
-  Moon,
   Route,
-  Sun,
-  SunMedium,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -39,15 +36,14 @@ import { ThemeSwitch } from "@/components/ui/theme-switch";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import { Avatar } from "@/components/ui/avatar";
-import { useWorkingExperiences } from "@/hooks/queries/working-experience.query";
 import { useDetectPathname } from "@/hooks/use-detect-pathname";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import moment from "moment";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
 import WorkingExperienceNavList from "./working-experience-nav-list";
-import moment from "moment";
 import WorkingExperienceNavMobileList from "./working-experience-nav-mobile-list";
 
 export function Navbar() {
@@ -56,19 +52,9 @@ export function Navbar() {
   const [mounted, setMounted] = useState(false);
   const isAdminPage = useDetectPathname({ pathname: "administrator" });
 
-  const workingExperiences = useWorkingExperiences();
-
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const changeTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
-  };
 
   useEffect(() => {}, [isAdminPage]);
 
@@ -113,14 +99,14 @@ export function Navbar() {
                   <Link href="/">Home</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              {/* <NavigationMenuItem>
+              <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
                   className={navigationMenuTriggerStyle()}
                 >
-                  <Link href="/docs">Resume</Link>
+                  <Link href="/docs">Docs</Link>
                 </NavigationMenuLink>
-              </NavigationMenuItem> */}
+              </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
@@ -132,7 +118,7 @@ export function Navbar() {
               <NavigationMenuItem>
                 <div className="animate-bounce">
                   <NavigationMenuTrigger className="bg-primary/50 font-bold text-white hover:bg-primary/20">
-                    ✨ Career Journey
+                    ✨ My Career
                   </NavigationMenuTrigger>
                 </div>
                 <WorkingExperienceNavList />

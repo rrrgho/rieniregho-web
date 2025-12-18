@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/tooltip";
 import { useDynamicHeight } from "@/hooks/use-dynamic-height";
 import { useProjectStore } from "@/store/useProjectStore";
-import { GithubIcon, Link } from "lucide-react";
+import { GithubIcon, Link as IconLink } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 export default function Home() {
   const isTall = useDynamicHeight();
   const projectName = useProjectStore((state) => state.name);
@@ -67,7 +68,7 @@ export default function Home() {
             </div>
             <div className="w-full mt-4">
               <Button className="p-5 md:p-7">
-                <Link />
+                <IconLink />
                 <span className="text-sm lg:text-lg cursor-pointer">
                   Get in touch
                 </span>
@@ -77,13 +78,9 @@ export default function Home() {
               <GithubIcon size={20} />
               <span className="text-foreground/70 text-xs mt-1 ms-2">
                 Want to fork this website?
-                <a
-                  href="https://github.com/rrrgho"
-                  className="underline decoration-solid ms-1"
-                  target="_blank"
-                >
-                  Give some stars on my Github
-                </a>
+                <Link className="ms-1 underline decoration-1" href="/docs">
+                  See documentation
+                </Link>
               </span>
             </div>
             <div className="w-[400px] absolute bottom-5 lg:w-[500px] mt-5 flex flex-nowrap">

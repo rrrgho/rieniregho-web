@@ -3,15 +3,19 @@
 import { ErrorState } from "@/components/error-state";
 import PageHeader from "@/components/page-header";
 import { ProjectDetailSkeleton } from "@/components/project-detail-skeleton";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+} from "@/components/ui/navigation-menu";
+import WorkingExperienceList from "@/components/working-experience-list";
 import { useWorkingExperienceDetail } from "@/hooks/queries/working-experience.query";
 import { renderHtmlContent } from "@/lib/html-parser";
-import { Project } from "@/types/project.types";
 import { WorkingExperience } from "@/types/working-experience.types";
-import { AlertCircle, ExternalLink, FileWarning, Github } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import moment from "moment";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -46,7 +50,7 @@ export default function ProjectDetailPage() {
       <PageHeader
         visiting_page={detail?.title}
         title={detail?.title}
-        description="See what amazing from this project story"
+        description="See what amazing from this working experience"
       />
       <div className="w-full min-h-screen px-5 lg:px-40">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -84,8 +88,19 @@ export default function ProjectDetailPage() {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            {/* Technologies */}
+            {/* Another Working Experiences */}
             <div className="bg-card border border-border rounded-lg p-6  top-24">
+              <h3 className="font-semibold text-primary">
+                Working experiences
+              </h3>
+              <span className="text-sm">Checkout this amazing experiences</span>
+              <div className="flex flex-wrap grid grid-cols-1 gap-2 mt-4">
+                <WorkingExperienceList hide_specific_list_by_id={id} />
+              </div>
+            </div>
+
+            {/* Galleries */}
+            <div className="bg-card border border-border rounded-lg p-6 top-24 mt-10">
               <h3 className="font-semibold text-primary">Gallery</h3>
               <span className="text-sm">See how amazing working here</span>
               <div className="flex flex-wrap grid grid-cols-1 gap-2 mt-4 py-10">
