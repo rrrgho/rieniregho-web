@@ -1,34 +1,39 @@
 import { ControllerRenderProps } from "react-hook-form";
+import ImageOriginal from "./image-original";
 
 const InputImage = ({
+  id,
   field,
   disabled,
+  height,
+  width,
 }: {
+  id?: string;
   field: ControllerRenderProps<any>;
   disabled?: boolean;
+  height?: string;
+  width?: string;
 }) => {
   const file = field.value;
   const previewUrl =
     file && typeof file !== "string" ? URL.createObjectURL(file) : file;
   return (
     <div
-      className={`relative w-full h-[400px] border border-dashed rounded-md flex items-center justify-center bg-muted transition ${
+      className={`relative ${!width ? "w-full" : `w-[${width}px]`} ${
+        !height ? "h-[400px]" : `h-[${height}px]`
+      } border border-dashed rounded-md flex items-center justify-center bg-muted transition ${
         disabled
           ? "opacity-50 pointer-events-none cursor-not-allowed"
           : "cursor-pointer hover:bg-muted/70"
       }`}
       onClick={() =>
-        !disabled && document.getElementById("image_input")?.click()
+        !disabled && document.getElementById(id ?? "image_input")?.click()
       }
     >
       {/* If Image exists → Preview */}
       {previewUrl ? (
         <>
-          <img
-            src={previewUrl}
-            alt="Preview"
-            className="h-full w-full object-cover rounded-md"
-          />
+          <ImageOriginal alt="Preview" src={previewUrl} />
 
           {/* Delete Button */}
           <button
@@ -57,7 +62,7 @@ const InputImage = ({
 
       {/* Hidden Real Input */}
       <input
-        id="image_input"
+        id={id ?? "image_input"}
         type="file"
         accept="image/*"
         disabled={disabled}

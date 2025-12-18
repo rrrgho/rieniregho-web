@@ -55,7 +55,7 @@ const items = [
   },
   {
     title: "Work Experience",
-    url: "#",
+    url: "/administrator/working-experience",
     icon: BriefcaseBusiness,
   },
 ];

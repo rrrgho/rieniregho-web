@@ -1,6 +1,6 @@
 "use client";
 
-import ProjectForm, { formSchema } from "@/components/project-form";
+import ProjectForm, { projectFormSchema } from "@/components/project-form";
 import {
   Card,
   CardDescription,
@@ -17,7 +17,7 @@ const ProjectAdd = () => {
   const projectMutation = useMutateProject();
   const { mutate, isPending } = projectMutation;
 
-  async function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof projectFormSchema>) {
     try {
       await mutate(data, {
         onSuccess: () => {

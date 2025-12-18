@@ -4,7 +4,7 @@ export const metadata = {
 };
 
 const ProjectAddLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>;
+  return <div className="mt-10">{children}</div>;
 };
 
 export default ProjectAddLayout;

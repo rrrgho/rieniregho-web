@@ -1,3 +1,5 @@
+"use client";
+
 import { IPaginationParams } from "@/types/global.type";
 import { ColumnDef } from "@tanstack/react-table";
 import { IAPIResponse } from "@/types/global.type";
