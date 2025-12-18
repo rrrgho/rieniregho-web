@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 /**
  * Main middleware for authentication
- * 
+ *
  * Checks for bearer token in HttpOnly cookie
  * If token exists, validates it with backend
  * If no token or invalid, redirects to /administrator/login
@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Allow /administrator/login without token
-  if (pathname === "/administrator/login") {
+  if (pathname === "/login") {
     return NextResponse.next();
   }
 
@@ -20,7 +20,7 @@ export function middleware(request: NextRequest) {
 
   // If no token and trying to access protected route, redirect to login
   if (!bearerToken && pathname.startsWith("/administrator")) {
-    return NextResponse.redirect(new URL("/administrator/login", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   // If token exists, you could optionally validate with backend here
