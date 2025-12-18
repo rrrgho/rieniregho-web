@@ -17,9 +17,11 @@ const ProtectLoginRoute = ({ children }: { children: React.ReactNode }) => {
         router.push("/api/auth/validate-token");
       } else {
         if (typeof window !== undefined) {
-          window.location.href = "/administrator";
+          console.log("HARD RELOAD: to administrator", session.status);
+          // window.location.href = "/administrator";
         } else {
-          router.push("/administrator");
+          console.log("PUSH: to administrator", session.status);
+          // router.push("/administrator");
         }
       }
     } else {
