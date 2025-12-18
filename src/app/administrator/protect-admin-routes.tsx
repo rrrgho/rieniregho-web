@@ -23,9 +23,8 @@ const ProtectAdminRoutes = ({ children }: { children: React.ReactNode }) => {
         setIsLoading(false);
       }
     } else if (session.status === "unauthenticated") {
-      console.log("SESSION:", session);
       // Not logged in, redirect to login
-      router.push("/coba/login");
+      router.push("/login");
     }
   }, [session.status, router]);
 
@@ -35,7 +34,9 @@ const ProtectAdminRoutes = ({ children }: { children: React.ReactNode }) => {
       <div className="flex w-full h-screen justify-center items-center">
         <div className="flex flex-col gap-4 items-center">
           <Spinner className="size-8" />
-          <p className="text-muted-foreground">Checking authorization...</p>
+          <p className="text-muted-foreground">
+            Checking authorization {session.status}...
+          </p>
         </div>
       </div>
     );
